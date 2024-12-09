@@ -1,0 +1,10 @@
+{% extends "base.html.twig" %}
+
+{% block body %}
+	<h1>creation d'un emprunt</h1>
+	{{form_start(form)}}
+	{{form_widget(form)}}
+	<button type="submit">enregisrer</button>
+	{{form_end(form)}}
+	<a href="{{path('borrowing_index')}}">retour à la liste</a>
+{% endblock %}
