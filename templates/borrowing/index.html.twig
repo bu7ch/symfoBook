@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Emprunts
+{% endblock %}
+
+{% block body %}
+	<h1>Emprunts</h1>
+	<ul>
+		{% for borrowing in borrowings %}
+			<li>
+				{{borrowing.user.name}}
+				emprunté "{{borrowing.book.title}}
+				a
+				{{ borrowing.borrowedAt|date('d-m-Y')}}
+				{% if borrowing.returnedAt %}
+					et il a été retourné
+					{{ borrowing.returnedAt|date('d-m-Y')}}
+				{% else %}
+					et il n'a pas encore été retourné.
+				{% endif %}
+
+			</li>
+		{% endfor %}
+	</ul>
+
+{% endblock %}
