@@ -1,0 +1,25 @@
+{% extends "base.html.twig" %}
+{% block body %}
+	<h1>Emprunt details :</h1>
+	<div>
+		<strong>Emprunt:</strong>
+		{{borrowing.user.name}}
+	</div>
+	<div>
+		<strong>Emprunter à la date :</strong>
+		{{borrowing.borrowedAt|date('d-m-Y')}}</div>
+	<div>
+		<strong>à Retourner :</strong>
+		{% if borrowing.returnedAt %}
+			{{borrowing.returnedAt|date('d-m-Y') }}
+		{% else %}
+			<span>
+				pas encore!</span>
+		{% endif %}
+
+	</div>
+	<hr>
+	<a href="{{path('borrowing_index')}}">Retour à la liste</a>
+	<a href="{{path('borrowing_edit', {id:borrowing.id})}}">Modifier</a>
+
+{% endblock %}

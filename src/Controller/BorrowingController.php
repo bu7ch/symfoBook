@@ -22,7 +22,8 @@ class BorrowingController extends AbstractController
   }
 
   #[Route('/new', name: 'borrowing_new', methods: ['GET', 'POST'])]
-  public function new(Request $request, BorrowingRepository $borrowingRepository): Response {
+  public function new(Request $request, BorrowingRepository $borrowingRepository): Response
+  {
     $borrowing = new Borrowing();
     $form = $this->createForm(BorrowingType::class, $borrowing);
     $form->handleRequest($request);
@@ -30,8 +31,32 @@ class BorrowingController extends AbstractController
       $borrowingRepository->save($borrowing, true);
       return $this->redirectToRoute('borrowing_index');
     }
-    return $this->render('borrowing/new.html.twig',[
-      'form'=> $form->createView(),
+    return $this->render('borrowing/new.html.twig', [
+      'form' => $form->createView(),
+    ]);
+  }
+
+  #[Route('/{id}', name: 'borrowing_show', methods: ['GET'])]
+  public function show(Borrowing $borrowing): Response
+  {
+    return $this->render('borrowing/show.html.twig', [
+      'borrowing' => $borrowing,
+    ]);
+  }
+
+  #[Route('/{id}/edit', name: 'borrowing_edit', methods: ['GET', 'POST'])]
+  public function edit(Request $request, Borrowing $borrowing, BorrowingRepository $borrowingRepository): Response
+  {
+    $form = $this->createForm(BorrowingType::class, $borrowing);
+    $form->handleRequest($request);
+
+    if ($form->isSubmitted() && $form->isValid()) {
+      $borrowingRepository->save($borrowing, true);
+
+      return $this->redirectToRoute('borrowing_index');
+    }
+    return $this->render('borrowing/edit.html.twig', [
+      'form' => $form->createView(),
     ]);
   }
 }
